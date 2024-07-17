@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Task{% endblock title %}
+
+{% block content %}
+<div  style = "width:50%; margin:auto">
+    <h1 class = "text-center text-white my-5 p-2" style ="background-color: #6B3FA0">Add Task</h1>
+    <form action="" method = "post" novalidate>
+        {% csrf_token %}
+        {{form | crispy}}
+        <input class = "btn btn-primary" type="submit" value="Submit">
+        <a href="{% url 'show_tasks' %}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+
+{% endblock content %}

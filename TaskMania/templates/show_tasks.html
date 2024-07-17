@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Show Tasks{% endblock title %}
+
+{% block content %}
+
+{% if data %}
+
+<div  style = "width:70%; margin:auto">
+    <h1 class = "text-center text-white my-5 p-2" style ="background-color: #6B3FA0">Tasks</h1> 
+    <div class="row">
+        {% for dt in data %}
+        <div class="col-sm-6 mb-3 mb-sm-0 ">
+          <div class="card m-3 p-2">
+            <div class="card-body">
+              <h4 class="card-title">{{dt.task_title}}</h4>
+              <small>{{dt.assign_date}}</small>
+              <p class="card-text" style="font-size: 20px;">{{dt.task_desc}}</p>
+
+            {% for cat in dt.category.all %}
+            <button class ="btn btn-info" disabled>{{ cat.category_name }}</button>
+            {% endfor %}
+            {% if dt.is_completed %}
+              <h4 class = "text-success mt-2">Completed</h4>
+            {% else %}
+              <div class = "mt-2">
+                <a href="{% url 'edit_data' dt.id %}" class="btn btn-warning">Edit</a>
+                <form action="{% url 'delete_data' dt.id %}" method="POST" class="d-inline">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
+    </div>
+
+    {% else %}
+    <h1 class = "container bg-danger mt-5 text-white text-center" style ="width:70%; margin:auto">No Records</h1>
+    {% endif %}
+
+{% endblock content %}
